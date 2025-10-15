@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RBN Network</title>
+  <meta name="description" content="RBN Network offers high-speed Fiber, OTT, and IPTV plans with free installation and router. Affordable broadband in India.">
+  <meta name="keywords" content="RBN Network, fiber plans, OTT, IPTV, broadband internet, Wi-Fi, India">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.5s, color 0.5s; }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at top, #0a0a0a, #000);
+      color: white;
+      overflow-x: hidden;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    /* ===== Header ===== */
+    header {
+      background: rgba(0, 0, 0, 0.85);
+      border-bottom: 1px solid #00e0ff55;
+      box-shadow: 0 0 10px #00e0ff33;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 30px;
+    }
+    .logo {
+      font-size: 1.6em;
+      font-weight: 700;
+      color: #00e0ff;
+      text-shadow: 0 0 8px #00e0ff;
+    }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .nav-links a:hover {
+      color: #00e0ff;
+      text-shadow: 0 0 6px #00e0ff;
+    }
+
+    /* ===== Dark Mode Toggle Button ===== */
+    .theme-toggle {
+      cursor: pointer;
+      font-size: 1.2em;
+      background: none;
+      border: none;
+      color: #00e0ff;
+      transition: transform 0.3s;
+    }
+    .theme-toggle:hover {
+      transform: rotate(20deg);
+    }
+
+    h2 {
+      text-align: center;
+      margin: 40px 0 25px;
+      font-size: 2em;
+      color: #00e0ff;
+      text-shadow: 0 0 10px #00e0ff;
+    }
+
+    .cards { padding: 40px 20px; }
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .plan-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      transition: 0.3s;
+      backdrop-filter: blur(4px);
+    }
+    .plan-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 20px #00e0ff55;
+    }
+    .plan-card h3 { color: #00e0ff; }
+    .plan-card .speed { font-size: 1.2em; margin: 8px 0; color: #aaf; }
+    .plan-card .price { font-weight: 600; margin-bottom: 10px; }
+    .muted li {
+      text-align: left;
+      font-size: 0.9em;
+      margin-left: 10px;
+      opacity: 0.8;
+    }
+    button {
+      background: #00e0ff;
+      color: #000;
+      font-weight: 600;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #00b8d9;
+      transform: scale(1.05);
+    }
+
+    /* === Popup === */
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(6px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    .popup-box {
+      background: #111;
+      border: 1px solid #00e0ff88;
+      border-radius: 16px;
+      padding: 25px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 0 20px #00e0ff55;
+      animation: fadeInScale 0.35s ease;
+    }
+    @keyframes fadeInScale {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .popup-box h3 { margin-bottom: 10px; color: #00e0ff; }
+    .popup-box input, .popup-box textarea {
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+    }
+    .popup-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .popup-buttons button, .popup-buttons a {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .whatsapp-btn {
+      background: #25D366;
+      color: white;
+    }
+    .submit-btn {
+      background: #00e0ff;
+      color: #000;
+    }
+    .close-btn {
+      background: #222;
+      color: #fff;
+      border: 1px solid #00e0ff;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .thankyou {
+      color: #00ff99;
+      font-size: 1.2em;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      background: #050505;
+      padding: 30px 20px;
+      text-align: center;
+      border-top: 1px solid #00e0ff33;
+      box-shadow: 0 -5px 10px #00e0ff11;
+    }
+    footer p { margin: 6px 0; font-size: 0.95em; opacity: 0.8; }
+
+    /* ===== Light Mode ===== */
+    body.light-mode {
+      background: #f5f5f5;
+      color: #111;
+    }
+    body.light-mode header {
+      background: rgba(255, 255, 255, 0.85);
+      border-bottom: 1px solid #00bcd455;
+      box-shadow: 0 0 10px #00bcd433;
+    }
+    body.light-mode .logo {
+      color: #0078aa;
+      text-shadow: none;
+    }
+    body.light-mode .nav-links a { color: #111; }
+    body.light-mode .nav-links a:hover {
+      color: #0078aa;
+      text-shadow: none;
+    }
+    body.light-mode .plan-card {
+      background: rgba(255, 255, 255, 0.9);
+      color: #111;
+      border-color: #ddd;
+    }
+    body.light-mode .plan-card h3 { color: #0078aa; }
+    body.light-mode footer {
+      background: #fafafa;
+      border-top: 1px solid #ccc;
+      color: #111;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header>
+  <nav>
+    <div class="logo">RAJ BROADBAND NETWORK</div>
+    <div class="nav-links">
+      <a href="#plans">Fiber</a>
+      <a href="#ott">OTT</a>
+      <a href="#iptv">IPTV</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== Your existing content below remains unchanged ===== -->
+<!-- (Fiber Plans, OTT Plans, IPTV Plans, Popup, Footer, etc.) -->
+<!-- Keep everything else from your original HTML exactly as is -->
+<!-- ===== Fiber Plans ===== -->
+<section id="plans" class="cards">
+  <h2>Our Fiber Plans</h2>
+  <div class="plans-grid">
+    <div class="plan-card">
+      <h3>Fiber Basic</h3>
+      <p class="speed"><u>75 Mbps Unlimited</u></p>
+      <p class="price">₹475 /mo • ₹1350 /3mo • ₹2500 /6mo • ₹4500 /12mo</p>
+      <ul class="muted">
+        <li>Best for work from home</li>
+        <li>Basic support</li>
+        <li>SonyLIV + 18 OTT</li>
+        <li>Free Installation & 5G router (6/12mo)</li>
+      </ul>
+      <button onclick="openPopup('Fiber Basic - 75 Mbps')" aria-label="Subscribe to Fiber Basic plan">Subscribe</button>
+    </div>
+    <div class="plan-card">
+      <h3>Fiber Pro</h3>
+      <p class="speed"><u>100 Mbps Unlimited</u></p>
+      <p class="price">₹500 /mo • ₹1500 /3mo • ₹2700 /6mo • ₹5000 /12mo</p>
+      <ul class="muted">
+        <li>24/7 support</li>
+        <li>SonyLIV + Amazon Lite</li>
+        <li>14 OTT Subscription</li>
+        <li>Free Installation & 5G router (6/12mo)</li>
+      </ul>
+      <button onclick="openPopup('Fiber Pro - 100 Mbps')" aria-label="Subscribe to Fiber Pro plan">Subscribe</button>
+    </div>
+    <div class="plan-card">
+      <h3>Fiber Ultra</h3>
+      <p class="speed"><u>150 Mbps Unlimited</u></p>
+      <p class="price">₹599 /mo • ₹1750 /3mo • ₹3000 /6mo • ₹5500 /12mo</p>
+      <ul class="muted">
+        <li>Free 5G router</li>
+        <li>19 OTT subscriptions</li>
+        <li>SonyLIV + Amazon Lite + Zee5</li>
+        <li>Free Installation & 5G router</li>
+      </ul>
+      <button onclick="openPopup('Fiber Ultra - 150 Mbps')" aria-label="Subscribe to Fiber Ultra plan">Subscribe</button>
+    </div>
+    <div class="plan-card">
+      <h3>Fiber Platinum</h3>
+      <p class="speed"><u>200 Mbps Unlimited</u></p>
+      <p class="price">₹799 /mo • ₹2200 /3mo • ₹4000 /6mo • ₹7500 /12mo</p>
+      <ul class="muted">
+        <li>Priority support</li>
+        <li>SonyLIV + Amazon Lite</li>
+        <li>Jio + ZEE5 + 19 OTT</li>
+        <li>Free Installation & 5G router</li>
+      </ul>
+      <button onclick="openPopup('Fiber Platinum - 200 Mbps')" aria-label="Subscribe to Fiber Platinum plan">Subscribe</button>
+    </div>
+    <div class="plan-card">
+      <h3>Fiber Platinum+</h3>
+      <p class="speed"><u>500 Mbps Unlimited</u></p>
+      <p class="price">₹1180 /mo • ₹3000 /3mo</p>
+      <ul class="muted">
+        <li>Free Installation & 5G router</li>
+        <li>SonyLIV + Amazon Lite</li>
+        <li>18 OTT Subscription</li>
+        <li>Jio + Zee5 + Netflix</li>
+      </ul>
+      <button onclick="openPopup('Fiber Platinum+ - 500 Mbps')" aria-label="Subscribe to Fiber Platinum Plus plan">Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OTT Plans ===== -->
+<section id="ott" class="cards">
+  <h2>OTT Bundles</h2>
+  <div class="plans-grid">
+    <div class="plan-card">
+      <h3>OTT Starter</h3>
+      <p class="price">₹70 /mo • ₹190 /3mo • ₹365 /6mo • ₹710 /12mo</p>
+      <ul class="muted">
+        <li>SonyLIV, Discovery+</li>
+        <li>OTTplay Premium</li>
+        <li>ShemarooMe, CHAUPAL, Dangal Play, DistroTV, Fancode, Fridaay, Gurjari, OM TV, Runn TV, Bhakti, ShemarooMe Gujarati, STAGE, VROTT, Dollywood Play, BhaktiFlix.</li>
+      </ul>
+      <button onclick="openPopup('OTT Starter')" aria-label="Subscribe to OTT Starter plan">Subscribe</button>
+    </div>
+    <div class="plan-card">
+      <h3>OTT Silver</h3>
+      <p class="price">₹110 /mo • ₹300 /3mo • ₹585 /6mo • ₹1000 /12mo</p>
+      <ul class="muted">
+        <li>SonyLIV + Amazon Lite</li>
+        <li>Discovery+, OTTplay Premium</li>
+        <li>ShemarooMe, CHAUPAL, Dangal Play, DistroTV, Fancode, Fridaay, Gurjari, OM TV, Runn TV, Bhakti, ShemarooMe Gujarati, STAGE, VROTT, Dollywood Play, BhaktiFlix.</li>
+      </ul>
+      <button onclick="openPopup('OTT Silver')" aria-label="Subscribe to OTT Silver plan">Subscribe</button>
+    </div>
+    <div class="plan-card">
+      <h3>OTT Gold</h3>
+      <p class="price">₹210 /mo • ₹575 /3mo • ₹1099 /6mo • ₹1750 /12mo</p>
+      <ul class="muted">
+        <li>SonyLIV + Amazon Lite + Jio</li>
+        <li>Discovery+, OTTplay Premium</li>
+        <li>ShemarooMe, CHAUPAL, Dangal Play, DistroTV, Fancode, Fridaay, Gurjari, OM TV, Runn TV, Bhakti, ShemarooMe Gujarati, STAGE, VROTT, Dollywood Play, BhaktiFlix.</li>
+      </ul>
+      <button onclick="openPopup('OTT Gold')" aria-label="Subscribe to OTT Gold plan">Subscribe</button>
+    </div>
+    <div class="plan-card">
+      <h3>OTT Premium</h3>
+      <p class="price">₹299 /mo • ₹799 /3mo • ₹1450 /6mo • ₹2500 /12mo</p>
+      <ul class="muted">
+        <li>SonyLIV + Amazon Lite + Jio + ZEE5</li>
+        <li>OTTplay Premium, Discovery+</li>
+        <li>ShemarooMe, CHAUPAL, Dangal Play, DistroTV, Fancode, Fridaay, Gurjari, OM TV, Runn TV, Bhakti, ShemarooMe Gujarati, STAGE, VROTT, Dollywood Play, BhaktiFlix.</li>
+      </ul>
+      <button onclick="openPopup('OTT Premium')" aria-label="Subscribe to OTT Premium plan">Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== IPTV Plans ===== -->
+<section id="iptv" class="cards">
+  <h2>IPTV Packages</h2>
+  <div class="plans-grid">
+    <div class="plan-card">
+      <h3>IPTV Silver</h3>
+      <p class="price">₹185 /mo • ₹500 /3mo</p>
+      <ul class="muted">
+        <li>350+ HD TV Channels + Sports Channel</li>
+        <li>No box needed — just install & watch on your Android Smart TV</li>
+      </ul>
+      <button onclick="openPopup('IPTV Silver')" aria-label="Subscribe to IPTV Silver plan">Subscribe</button>
+    </div>
+    <div class="plan-card">
+      <h3>IPTV Gold</h3>
+      <p class="price">₹210 /mo • ₹550 /3mo</p>
+      <ul class="muted">
+        <li>500+ HD/FHD Channels + Sports + VOD + Series (All OTT Platforms)</li>
+        <li>No box needed — just install & watch on your Android Smart TV</li>
+      </ul>
+      <button onclick="openPopup('IPTV Gold')" aria-label="Subscribe to IPTV Gold plan">Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Popup ===== -->
+<div class="popup-overlay" id="popup">
+  <div class="popup-box">
+    <h3 id="popup-plan">Selected Plan</h3>
+    <form id="contactForm" action="https://formspree.io/f/xdkwlwby" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" id="popup-message" rows="3" placeholder="Message"></textarea>
+      <input type="hidden" name="plan" id="popup-plan-input">
+      <div class="popup-buttons">
+        <a href="#" target="_blank" id="whatsappLink" class="whatsapp-btn">WhatsApp</a>
+        <button type="submit" class="submit-btn">Submit</button>
+      </div>
+    </form>
+    <button class="close-btn" onclick="popup.style.display='none'">Close</button>
+    <p class="thankyou" id="thankYou">✅ Thank you for contacting us!</p>
+  </div>
+</div>
+
+<!-- ===== Footer ===== -->
+<footer>
+  <p>📞 +91 7798233403 | ✉️ support@rbnnetwork.in</p>
+  <p>© 2025 RBN Network. All rights reserved.</p>
+</footer>
+
+<script>
+  // === Popup Logic (unchanged) ===
+  const popup = document.getElementById("popup");
+  const planLabel = document.getElementById("popup-plan");
+  const planInput = document.getElementById("popup-plan-input");
+  const thankYou = document.getElementById("thankYou");
+
+  function openPopup(plan) {
+    popup.style.display = "flex";
+    planLabel.textContent = plan;
+    planInput.value = plan;
+    document.getElementById("whatsappLink").href =
+      `https://wa.me/917798233403?text=Hi, I’m interested in the ${encodeURIComponent(plan)} plan.`;
+  }
+
+  popup.addEventListener("click", (e) => {
+    if (e.target === popup) popup.style.display = "none";
+  });
+
+  document.getElementById("contactForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (response.ok) {
+      thankYou.style.display = "block";
+      form.reset();
+      setTimeout(() => popup.style.display = "none", 2000);
+    }
+  });
+
+  // === Dark Mode Toggle with System Auto Detection ===
+  const toggleBtn = document.getElementById("themeToggle");
+
+  // Check user preference
+  const savedTheme = localStorage.getItem("theme");
+
+  if (savedTheme) {
+    document.body.classList.toggle("light-mode", savedTheme === "light");
+    toggleBtn.textContent = savedTheme === "light" ? "☀️" : "🌙";
+  } else {
+    // No saved preference — use system theme
+    const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+    if (prefersLight) {
+      document.body.classList.add("light-mode");
+      toggleBtn.textContent = "☀️";
+    }
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("light-mode");
+    const isLight = document.body.classList.contains("light-mode");
+    toggleBtn.textContent = isLight ? "☀️" : "🌙";
+    localStorage.setItem("theme", isLight ? "light" : "dark");
+  });
+</script>
+
+</body>
+</html>
